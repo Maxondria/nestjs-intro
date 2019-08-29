@@ -21,6 +21,7 @@ jobs:
       run: |
         yarn global add typescript
         npm i -g @nestjs/cli
+        yarn
         yarn test
         yarn run test:e2e
         yarn run test:cov
