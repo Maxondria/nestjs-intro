@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [8.x, 10.x, 12.x]
+        node-version: [12.x]
 
     steps:
     - uses: actions/checkout@v1
@@ -17,11 +17,12 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
+    - name: yarn install, and test
       run: |
-        npm install
-        npm run test
-        npm run test:e2e
-        npm run test:cov
+        yarn global add typescript
+        npm i -g @nestjs/cli
+        yarn test
+        yarn run test:e2e
+        yarn run test:cov
       env:
         CI: true
