@@ -15,43 +15,60 @@ export class ProductsController {
   constructor(private readonly ProductsService: ProductsService) {}
 
   @Post('add')
-  addProduct(@Body()
+  async addProduct(@Body()
   postBody: {
     title: string;
     description: string;
     price: number;
-  }): { id: string } {
-    const id = new Date().toString();
-    this.ProductsService.addProduct({ ...postBody, id });
-    return { id };
+  }): Promise<{ id: string }> {
+    const result = await this.ProductsService.addProduct({ ...postBody });
+    return result;
   }
 
   @Get('all')
-  getAll() {
-    return this.ProductsService.getAll();
+  async getAll(): Promise<
+    {
+      id: any;
+      title: any;
+      price: any;
+      description: any;
+    }[]
+  > {
+    return await this.ProductsService.getAll();
   }
 
   @Get(':id')
-  getOne(@Param('id') id: string): Product {
-    return this.ProductsService.getOne(id);
+  async getOne(
+    @Param('id') id: string,
+  ): Promise<{
+    id: string;
+    title: string;
+    description: string;
+    price: number;
+  }> {
+    return await this.ProductsService.getOne(id);
   }
 
   @Patch(':id')
-  updateProd(
+  async updateProd(
     @Body()
     postBody: {
       title: string;
       description: string;
       price: number;
     },
-    @Param(':id') id: string,
-  ) {
-    this.ProductsService.updateProd({ ...postBody, id });
-    return true;
+    @Param('id') id: string,
+  ): Promise<{
+    id: string;
+    title: string;
+    description: string;
+    price: number;
+  }> {
+    return await this.ProductsService.updateProd({ ...postBody, id });
   }
 
   @Delete(':id')
-  deleteProduct(@Param('id') id: string): boolean {
-    return this.ProductsService.deleteProd(id);
+  async deleteProduct(@Param('id') id: string): Promise<boolean> {
+    return await this.ProductsService.deleteProd(id);
   }
 }
