@@ -23,7 +23,5 @@ jobs:
         npm i -g @nestjs/cli
         yarn
         yarn test
-        yarn run test:e2e
-        yarn run test:cov
       env:
         CI: true
